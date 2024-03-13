@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <!-- External CSS libraries -->
+
+
+{% include "inc/head_script.html" %}    
+</head>
+{% include 'inc/link.html' %}
+{% include "inc/headers/top_header.html" %}
+{% include "inc/headers/main_header.html" %}
+    {% block content %}
+	
+    {% endblock %}
+{% include 'inc/footer.html' %}
+{% include 'inc/scripts.html' %}
+
+
+</html>
