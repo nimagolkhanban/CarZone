@@ -1,6 +1,8 @@
 from datetime import datetime
-
+from multiselectfield import MultiSelectField
+from ckeditor.fields import RichTextField
 from django.db import models
+from djchoices import ChoiceItem, DjangoChoices
 
 # Create your models here.
 
@@ -25,7 +27,7 @@ class Car(models.Model):
     for r in range(2000, (datetime.now().year + 1)):
         year_choice.append((r, r))
 
-    features_choices = (
+    features_choices = [
         ('Cruise Control', 'Cruise Control'),
         ('Audio Interface', 'Audio Interface'),
         ('Airbags', 'Airbags'),
@@ -39,7 +41,7 @@ class Car(models.Model):
         ('Auto Start/Stop', 'Auto Start/Stop'),
         ('Wind Deflector', 'Wind Deflector'),
         ('Bluetooth Handset', 'Bluetooth Handset'),
-    )
+    ]
 
     door_choices = (
         ('2', '2'),
@@ -57,19 +59,19 @@ class Car(models.Model):
     year = models.IntegerField("year", choices=year_choice)
     condition = models.CharField(max_length=100)
     price = models.IntegerField()
-    description = models.TextField(max_length=100)
+    description = RichTextField()
     car_photo = models.ImageField(upload_to="photos/cars/%y/%m/%d/")
     car_photo1 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
     car_photo2 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
     car_photo3 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
     car_photo4 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
-    features = models.CharField(max_length=100, choices=features_choices)
+    features = MultiSelectField(choices=features_choices, max_length=100) #in django 5 yoy should delete some code in multiselectfield library to make this field work
     body_style = models.CharField(max_length=100)
     engine = models.CharField(max_length=100)
     transmission = models.CharField(max_length=100)
     interior = models.CharField(max_length=100)
     miles = models.IntegerField()
-    doors = models.IntegerField(choices=door_choices)
+    doors = models.CharField(choices=door_choices,max_length=1)
     passengers = models.IntegerField()
     vin_no = models.CharField(max_length=100)
     milage = models.IntegerField()
@@ -77,3 +79,4 @@ class Car(models.Model):
     no_of_owner = models.CharField(max_length=100)
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(default=datetime.now, blank=True)
+
