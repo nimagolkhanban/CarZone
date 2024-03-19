@@ -60,12 +60,12 @@ class Car(models.Model):
     condition = models.CharField(max_length=100)
     price = models.IntegerField()
     description = RichTextField()
-    car_photo = models.ImageField(upload_to="photos/cars/%y/%m/%d/")
-    car_photo1 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
-    car_photo2 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
-    car_photo3 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
-    car_photo4 = models.ImageField(upload_to="photos/cars/%y/%m/%d/", blank=True)
-    features = MultiSelectField(choices=features_choices, max_length=100) #in django 5 yoy should delete some code in multiselectfield library to make this field work
+    car_photo = models.ImageField(upload_to="photos/%y/%m/%d/")
+    car_photo1 = models.ImageField(upload_to="photos/%y/%m/%d/", blank=True)
+    car_photo2 = models.ImageField(upload_to="photos/%y/%m/%d/", blank=True)
+    car_photo3 = models.ImageField(upload_to="photos/%y/%m/%d/", blank=True)
+    car_photo4 = models.ImageField(upload_to="photos/%y/%m/%d/", blank=True)
+    features = MultiSelectField(choices=features_choices, max_length=200) #in django 5 yoy should delete some code in multiselectfield library to make this field work
     body_style = models.CharField(max_length=100)
     engine = models.CharField(max_length=100)
     transmission = models.CharField(max_length=100)
@@ -75,8 +75,10 @@ class Car(models.Model):
     passengers = models.IntegerField()
     vin_no = models.CharField(max_length=100)
     milage = models.IntegerField()
-    fule_type = models.CharField(max_length=100)
+    fuel_type = models.CharField(max_length=100)
     no_of_owner = models.CharField(max_length=100)
     is_featured = models.BooleanField(default=False)
     created_date = models.DateTimeField(default=datetime.now, blank=True)
 
+    def __str__(self):
+        return self.car_title
