@@ -32,7 +32,15 @@ DEBUG = os.environ.get("DEBUG")
 
 ALLOWED_HOSTS = []
 
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
+SOCIALACCOUNT_PROVIDERS = {
+  'google': {
+      "SCOPE": ["profile", "email"],
+      "AUTH_PARAMS": {"access_type": "online"}
+  }
+}
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,8 +56,14 @@ INSTALLED_APPS = [
     'multiselectfield',
     'django.contrib.humanize',
     'accounts.apps.AccountsConfig',
+    #authentication whit facebook and google
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
-
+    #preloader
+    'allauth.socialaccount.providers.google'
 
 
 ]
@@ -62,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'carzone.urls'
@@ -153,3 +168,9 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
 
 }
+
+SITE_ID = 2
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
