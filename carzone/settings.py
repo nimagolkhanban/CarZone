@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'multiselectfield',
     'django.contrib.humanize',
     'accounts.apps.AccountsConfig',
+    'contacts',
     #authentication whit facebook and google
     'django.contrib.sites',
     'allauth',
@@ -174,3 +175,4 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+SILENCED_SYSTEM_CHECKS = ["ckeditor.W001"]
