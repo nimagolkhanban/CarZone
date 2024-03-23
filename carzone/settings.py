@@ -11,11 +11,15 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import _locale
 import os
 from decouple import config
 from dotenv import load_dotenv
-load_dotenv()
 from django.contrib.messages import constants as messages
+load_dotenv()
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -64,7 +68,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     #preloader
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'django_extensions',
 
 
 ]
@@ -176,3 +181,13 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 SILENCED_SYSTEM_CHECKS = ["ckeditor.W001"]
+
+#email_setting
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'ningoban@gmail.com'
+EMAIL_HOST_PASSWORD = 'arxiqmbckucrzxyz'
+EMAIL_USE_TLS = True
+
+_locale._getdefaultlocale = (lambda *args: ['en_US', 'utf8'])

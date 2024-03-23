@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
 from cars.models import Car
 from pages.models import Team
 
@@ -32,7 +35,27 @@ def services(request):
     return render(request, "pages/services.html")
 
 def contact(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        email = request.POST["email"]
+        subject = request.POST["subject"]
+        phone = request.POST["phone"]
+        message = request.POST["message"]
+        message_body = "name :" + name + "email :" + email + "subject :" + subject + "phone :" + phone + "message :" + message
+
+        admin_info = User.objects.get(is_superuser=True)
+        admin_email = admin_info.email
+        send_mail(
+            message_body,
+            'you have new message from the site with this subject : ' + str(subject),
+            'ningoban@gmail.com',
+            [admin_email],
+            fail_silently=False
+        )
+        messages.success(request, "Your message has been send")
+        return redirect("contact")
     return render(request, "pages/contact.html")
+
 
 def about_us(request):
     teams = Team.objects.all()
